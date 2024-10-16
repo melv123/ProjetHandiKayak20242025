@@ -4,6 +4,13 @@ from std_msgs.msg import Float32MultiArray
 from icm20948 import ICM20948
 import struct
 
+
+# Ce code ROS 2 lit les données d'une IMU ICM20948 et publie les mesures d'accéléromètre, de gyroscope et de magnétomètre sur des topics ROS.
+# La classe MyNode initialise un nœud appelé 'imu_listener' et crée trois éditeurs pour publier les données sur les topics 'imu/gyroscope', 'imu/accelerometer', et 'imu/magnetometer'.
+# Un timer appelle périodiquement la fonction timer_callbacks(), qui récupère les données de l'IMU, les stocke dans des messages de type Float32MultiArray, puis les publie.
+# Les données du magnétomètre sont obtenues via une lecture et une mise à l'échelle spécifique.
+# Le nœud tourne en continu jusqu'à sa fermeture, où le processus ROS est proprement arrêté.
+
 class MyNode(Node):
     """
     __init__ initialises the global processes and variables

@@ -10,6 +10,14 @@ import serial
 import adafruit_gps
 
 
+# Ce code ROS 2 en Python lit les données d'un module GPS Adafruit via une liaison série, les traite et les publie sur un topic ROS nommé "Gps_readings".
+# La classe `MyNode` initialise un nœud, crée un éditeur pour les messages GPS (`NavSatFix`), et utilise un timer pour appeler périodiquement une fonction de rappel toutes les secondes.
+# Le module GPS est configuré pour émettre des données à une fréquence de 1 Hz.
+# Dans chaque cycle, les données GPS (latitude, longitude, altitude) sont récupérées si disponibles, puis publiées, grâce aux fonctions gps_treatement et timer_callbacks.
+# Le nœud reste actif jusqu'à sa fermeture, où la liaison série est proprement terminée.
+
+
+
 class MyNode(Node):
     """
     __init__ initialises the global processes and variables
