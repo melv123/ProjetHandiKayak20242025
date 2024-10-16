@@ -1,21 +1,43 @@
+"""
+Name of the file : imu_main.py 
+Program functions : 
+    This program is used to initialize the node 'imu_treatment' and create a publisher named 'Imu_readings'. 
+    The goal is to keep informations from 'imu_listener.py', to treat it and to publish it (gyroscope, accelerometer, magnetometer).
+"""
+
+#############################################################
+# Librairies
+#############################################################
+# ROS Node creation and gestion
 import rclpy
 from rclpy.node import Node
+
+# Standard ROS message to manage sensors data, navigation message, vectors and quaternations
 from sensor_msgs.msg import Imu
 from nav_msgs.msg import Odometry
 from geometry_msgs.msg import Vector3
 from geometry_msgs.msg import Quaternion
+
 import numpy as np
+
+# tf_transformation is used to perform transformation between coordinate systems
 from tf_transformations import euler_from_quaternion
+
+# IMU data treatment Algorithm 
 from .submodules.madgwick import Madgwick
+
 from std_msgs.msg import Float32MultiArray
 
+#############################################################
+# Classes definition
+#############################################################
 class MyNode(Node):
     
     """
     __init__ initialises the global processes and variables
     """
     def __init__(self):
-        super().__init__('imu_treatement')
+        super().__init__('imu_treatement') # 'imu_treatment' is the node name
         self.period = 1/35  # Period between callbacks
         # Create the publisher of an IMU message on the node Imu_readings
         self.publisher_ = self.create_publisher(Imu, 'Imu_readings', 10)
@@ -47,7 +69,7 @@ class MyNode(Node):
         return ned[1], ned[0], -ned[2]
 
     """
-    imu_treatement gets the data from the IMU, traet it and returns it in the IMU format
+    imu_treatement gets the data from the IMU, treat it and returns it in the IMU format
     @return imu the IMU message
     """
     def imu_treatement(self):
