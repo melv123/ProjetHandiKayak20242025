@@ -1,3 +1,16 @@
+"""
+File name : ekf_listener.py
+Program function : 
+    This program is used to create a topic named 'buzzer_instruction' and to capture informations from
+    'odometry/filtered' and use functions from KayakFunctions before publishing on the topic.
+
+
+"""
+
+#################################################
+# Librairies
+#################################################
+
 import rclpy
 from rclpy.node import Node
 from sensor_msgs.msg import Imu
@@ -9,6 +22,9 @@ import numpy as np
 from .submodules.kayak_function import KayakFunctions
 from tf_transformations import euler_from_quaternion
 
+#################################################
+# Class definition
+#################################################
 
 class MyNode(Node):
     """
